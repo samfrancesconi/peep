@@ -2,6 +2,7 @@ import Controller from '../utils/Controller.js';
 import Player from './Player.js';
 import Prop from './Prop.js';
 import Group from './Group.js';
+import Worm from './Worm.js';
 
 
 export default class Game {
@@ -17,10 +18,22 @@ export default class Game {
         this.gameFrame = 0;
         this.points = 0;
 
+        
+
+        console.log();
+
         //props spawner put it in a function
         setInterval(()=>{
-            this.worms.addElement(new Prop('/images/worm.png', 0,Math.floor(Math.random() * this.board.width), 0, 15, 15));
-        }, 2000);
+            console.log('entered');
+            const propsTypes = [
+                new Prop('/images/worm.png', 0,Math.floor(Math.random() * this.board.width), 0, 15, 15),
+                new Prop('/images/worm.png', 0,Math.floor(Math.random() * this.board.width), 0, 15, 15),
+                new Prop('/images/worm.png', 0,Math.floor(Math.random() * this.board.width), 0, 15, 15),
+                new Worm ('/images/wormtrs.png', Math.floor(Math.random() * this.board.width), 0, 17, 17)
+            ];
+            //this.worms.addElement(new Prop('/images/worm.png', 0,Math.floor(Math.random() * this.board.width), 0, 15, 15));
+            this.worms.addElement(propsTypes[Math.floor(Math.random() * 4)]);
+        }, 500);
        
         this.canvas.font = "25px Comic Sans MS";
 
@@ -45,7 +58,7 @@ export default class Game {
                 worm.render(this.canvas);
                 worm.move();
                 // I slow down the speed of the widget animation
-                if(this.gameFrame % 5 == 0){
+                if(this.gameFrame % 5 == 0 && worm.isAnimated){
                     worm.animate();
                 }    
             }
@@ -63,8 +76,14 @@ export default class Game {
                 ) {
                 //delete this.worms.elements[i];
                 if(!this.worms.elements[i].noRender) {
-                    this.points += 1;
-                    new Audio('sounds/peep.mp3').play();
+                    if(this.worms.elements[i].isAnimated) {
+                        this.points -= 1;
+                        new Audio('sounds/mua.mp3').play();
+                    }
+                    else {
+                        this.points += 1;
+                        new Audio('sounds/peep.mp3').play();
+                    }
                 }
                     
                 this.worms.elements[i].noRender = true;

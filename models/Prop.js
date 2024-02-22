@@ -11,6 +11,7 @@ export default class Prop {
         this.srcy = srcy;
         this.image = new Image();
         this.image.src = src;
+        this.isAnimated = true;
     }
     render(c){
         c.drawImage(this.image, 0, this.srcy, 16, 16,this.position.x, this.position.y, this.dimension.width, this.dimension.height);
