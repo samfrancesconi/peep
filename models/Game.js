@@ -3,12 +3,16 @@ import Player from './Player.js';
 import Prop from './Prop.js';
 import Group from './Group.js';
 import Worm from './Worm.js';
+import Collider from '../utils/Collider.js';
 
 
 export default class Game {
     constructor() {
         this.board = document.getElementById('game');
         this.canvas = this.board.getContext('2d');
+        this.currentState;
+        this.nextState;
+        [this.currentScene, this.nextScene] = ['intro', 'gameover'];
         this.sprite = new Player('images/duckie.png', 0, 0, this.board.width / 2, this.board.height - 20, 30, 20);
         this.worms = new Group();
         this.controller = new Controller({
@@ -18,13 +22,8 @@ export default class Game {
         this.gameFrame = 0;
         this.points = 0;
 
-        
-
-        console.log();
-
         //props spawner put it in a function
         setInterval(()=>{
-            console.log('entered');
             const propsTypes = [
                 new Prop('/images/worm.png', 0,Math.floor(Math.random() * this.board.width), 0, 15, 15),
                 new Prop('/images/worm.png', 0,Math.floor(Math.random() * this.board.width), 0, 15, 15),
@@ -33,22 +32,43 @@ export default class Game {
             ];
             //this.worms.addElement(new Prop('/images/worm.png', 0,Math.floor(Math.random() * this.board.width), 0, 15, 15));
             this.worms.addElement(propsTypes[Math.floor(Math.random() * 4)]);
-        }, 500);
+        }, 400);
        
         this.canvas.font = "25px Comic Sans MS";
 
-        this.animationEngine()
+        //this.animationEngine()
+    }
+
+    initialize() {
+        setInterval(()=>{
+            if(this.nextState == null)
+                return
+
+            switch (this.nextState) {
+                case 'intro':
+                    console.log('this is intro');
+                    break;
+                case 'play':
+                    this.animationEngine();
+                    break;
+                case 'gameover':
+                    console.log('gameover');
+                    break
+            };
+            this.currentState = this.nextState;
+            this.nextState = null;
+        }, 100);
     }
      
-
     animationEngine() {           
         this.canvas.clearRect(0,0,this.board.width, this.board.height);
         this.sprite.render(this.canvas);
         
         this.canvas.strokeText(this.points ,this.board.width - 30, 25);
         this.canvas.strokeStyle = "yellow";
-        
-        
+
+        //let collider = new Collider(this.sprite, this.worms.elements);
+        //collider.detectCollisions();
        
         this.worms.elements.map(worm => {
             if (worm.noRender) {
@@ -63,6 +83,10 @@ export default class Game {
                 }    
             }
         });
+
+        
+
+        console.log(this.worms.elements);
 
         //collider function to optimize//
         //collider starts
