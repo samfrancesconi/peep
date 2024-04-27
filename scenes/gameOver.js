@@ -1,17 +1,23 @@
 export default class GameOver {
-    constructor(models) {
-        this.scene = models
+    constructor(game) {
+        this.game = game;
+        window.addEventListener('keydown', (e) => {
+            if(e.code == 'Space') {
+                location.reload()
+            }
+        })
+        this.game.board.style.backgroundImage = "url('/images/gameover_bg.png')";
     }
 
     render() {
-        this.scene.canvas.clearRect(0,0,this.scene.board.width, this.scene.board.height);
-        this.scene.canvas.strokeText('GAME OVER' , 100, 50);
-        this.scene.canvas.strokeStyle = "yellow";
+        this.game.canvas.clearRect(0,0,this.game.board.width, this.game.board.height);
+        this.game.canvas.strokeText('GAME OVER' , 100, 50);
+        this.game.canvas.strokeStyle = "yellow";
 
         window.requestAnimationFrame(this.render.bind(this));
     }
 
     changeScene() {
-        this.scene.nextScene = 'play';
+        this.game.nextScene = 'intro';
     }
 }

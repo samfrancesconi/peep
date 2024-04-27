@@ -1,26 +1,27 @@
 export default class Intro {
-    constructor(models) {
-        this.scene = models
+    constructor(game) {
+        this.game = game;
         window.addEventListener('keydown', (e) => {
             if(e.code == 'Space') {
                 return this.changeScene()
             }
         })
+        this.game.board.style.backgroundImage = "url('/images/intro_bg.png')";
     }
 
     render() {
-        this.scene.canvas.clearRect(0,0,this.scene.board.width, this.scene.board.height);
-        this.scene.canvas.strokeText('PRESS ENTER TO START...' , 20, 50);
-        this.scene.canvas.strokeStyle = "yellow";
+        this.game.canvas.clearRect(0,0,this.game.board.width, this.game.board.height);
+        this.game.canvas.strokeText('PRESS ENTER TO START...' , 20, 50);
+        this.game.canvas.strokeStyle = "yellow";
 
-        if(this.scene.nextScene == 'play') {
-            return this.scene.canvas.clearRect(0,0,this.scene.board.width, this.scene.board.height);
+        if(this.game.nextScene == 'play') {
+            return this.gamee.canvas.clearRect(0,0,this.game.board.width, this.game.board.height);
         }
 
         window.requestAnimationFrame(this.render.bind(this));
     }
 
     changeScene() {
-        this.scene.nextScene = 'play';
+        this.game.nextScene = 'play';
     }
 }
