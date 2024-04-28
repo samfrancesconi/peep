@@ -1,6 +1,7 @@
-import Play from '../scenes/GamePlay.js'
-import Intro from '../scenes/Intro.js'
-import GameOver from '../scenes/GameOver.js'
+import PlayScene from './scenes/GamePlayScene.js'
+import IntroScene from './scenes/IntroScene.js'
+import YouWonScene from './scenes/YouWonScene.js'
+import GameOverScene from './scenes/GameOverScene.js'
 
 
 export default class Game {
@@ -20,14 +21,17 @@ export default class Game {
 
             switch (this.nextScene) {
                 case 'intro':
-                    new Intro(this).render();
+                    new IntroScene(this).render();
                     break;
                 case 'play':
-                    new Play(this).render(); 
+                    new PlayScene(this).render(); 
+                    break;
+                case 'youwon':
+                    new YouWonScene(this).render();
                     break;
                 case 'gameover':
-                    new GameOver(this).render()
-                    break
+                    new GameOverScene(this).render();
+                    break;
             };
             this.currentScene = this.nextState;
             this.nextScene = null;

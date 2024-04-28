@@ -4,9 +4,10 @@ import Worm from '../models/Worm.js';
 import Player from '../models/Player.js';
 import Controller from '../utils/Controller.js';
 
-export default class GamePlay {
+export default class GamePlayScene {
     constructor(game) {
         this.game = game;
+        this.timer = 60;
         this.sprite = new Player('images/duckie.png', 0, 0, this.game.board.width / 2, this.game.board.height - 20, 30, 20);
         this.controller = new Controller({
             'ArrowRight' : this.sprite.moveRight.bind(this.sprite),
@@ -24,6 +25,7 @@ export default class GamePlay {
             this.worms.addElement(propsTypes[Math.floor(Math.random() * 4)]);
         }, 400);
         this.game.board.style.backgroundImage = "url('/images/lake.jpeg')";
+        this.startTimer();
     }
 
     render() {
@@ -31,6 +33,9 @@ export default class GamePlay {
         this.sprite.render(this.game.canvas);
         
         this.game.canvas.strokeText(this.game.points ,this.game.board.width - 30, 25);
+        this.game.canvas.strokeStyle = "yellow";
+
+        this.game.canvas.strokeText(this.timer ,0 , 25);
         this.game.canvas.strokeStyle = "yellow";
 
         //let collider = new Collider(this.scene.sprite, this.scene.worms.elements);
@@ -87,9 +92,19 @@ export default class GamePlay {
             this.game.canvas.clearRect(0,0,this.game.board.width, this.game.board.height);
             return this.game.nextScene = 'gameover'
         }
-        
+
+        if(this.timer <= 0) {
+            return this.game.nextScene = 'youwon'
+        }
+             
         this.game.gameFrame++;
 
         window.requestAnimationFrame(this.render.bind(this));
+    }
+
+    startTimer() {
+        setInterval(()=>{
+            this.timer--
+        }, 1000)
     }
 }
