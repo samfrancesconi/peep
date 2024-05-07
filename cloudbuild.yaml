@@ -1,0 +1,31 @@
+steps:
+- id: 'build'
+  name: 'gcr.io/cloud-builders/docker'
+  args:
+  - 'build'
+  - '--build-arg'
+  - 'ENVIRONMENT=$_ENVIRONMENT'
+  - '-t'
+  - '$_REGION-docker.pkg.dev/$_PROJECT/$_APP-$_ENVIRONMENT/$_SERVICE:$SHORT_SHA'
+  - '.'
+
+- id: 'push'
+  name: 'gcr.io/cloud-builders/docker'
+  args:
+  - 'push'
+  - '$_REGION-docker.pkg.dev/$_PROJECT/$_APP-$_ENVIRONMENT/$_SERVICE:$SHORT_SHA'
+
+- id: 'deploy_service'
+  name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: gcloud
+  args:
+  - 'run'
+  - 'deploy'
+  - '$_SERVICE-$_ENVIRONMENT'
+  - '--image'
+  - '$_REGION-docker.pkg.dev/$_PROJECT/$_APP-$_ENVIRONMENT/$_SERVICE:$SHORT_SHA'
+  - '--region'
+  - '$_REGION'
+  - '--platform'
+  - 'managed'
+  - '--allow-unauthenticated'
