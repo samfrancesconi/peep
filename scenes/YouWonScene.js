@@ -6,7 +6,7 @@ export default class YouWonScene {
                 location.reload()
             }
         })
-        this.game.board.style.backgroundImage = "url('/images/youwon_bg.png')";
+        this.game.board.style.backgroundImage = "url('images/youwon_bg.png')";
     }
 
     render() {

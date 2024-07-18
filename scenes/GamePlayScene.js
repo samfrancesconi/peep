@@ -16,15 +16,15 @@ export default class GamePlayScene {
         this.worms = new Group();
         setInterval(()=>{
             const propsTypes = [
-                new Prop('/images/worm.png', 0,Math.floor(Math.random() * this.game.board.width), 0, 15, 15),
-                new Prop('/images/worm.png', 0,Math.floor(Math.random() * this.game.board.width), 0, 15, 15),
-                new Prop('/images/worm.png', 0,Math.floor(Math.random() * this.game.board.width), 0, 15, 15),
-                new Worm ('/images/wormtrs.png', Math.floor(Math.random() * this.game.board.width), 0, 17, 17)
+                new Prop('images/worm.png', 0,Math.floor(Math.random() * this.game.board.width), 0, 15, 15),
+                new Prop('images/worm.png', 0,Math.floor(Math.random() * this.game.board.width), 0, 15, 15),
+                new Prop('images/worm.png', 0,Math.floor(Math.random() * this.game.board.width), 0, 15, 15),
+                new Worm ('images/wormtrs.png', Math.floor(Math.random() * this.game.board.width), 0, 17, 17)
             ];
             //this.worms.addElement(new Prop('/images/worm.png', 0,Math.floor(Math.random() * this.board.width), 0, 15, 15));
             this.worms.addElement(propsTypes[Math.floor(Math.random() * 4)]);
         }, 400);
-        this.game.board.style.backgroundImage = "url('/images/lake.jpeg')";
+        this.game.board.style.backgroundImage = "url('images/lake.jpeg')";
         this.startTimer();
     }
 

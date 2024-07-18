@@ -6,7 +6,7 @@ export default class IntroScene {
                 return this.changeScene()
             }
         })
-        this.game.board.style.backgroundImage = "url('/images/intro_bg.png')";
+        this.game.board.style.backgroundImage = "url('images/prs_srp.png')";
     }
 
     render() {

@@ -6,7 +6,7 @@ export default class GameOverScene {
                 location.reload()
             }
         })
-        this.game.board.style.backgroundImage = "url('/images/gameover_bg.png')";
+        this.game.board.style.backgroundImage = "url('images/gameover_bg.png')";
     }
 
     render() {
