@@ -1,3 +1,3 @@
 import Game from './Game.js'
 
-new Game().initialize();
+new Game().start();

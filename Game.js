@@ -14,7 +14,7 @@ export default class Game {
         this.canvas.font = "20px Comic Sans MS";
     }
 
-    initialize() {
+    start() {
         setInterval(()=>{
             if(this.nextScene == null)
                 return
